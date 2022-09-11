@@ -49,14 +49,14 @@ def app():
             elif len(download_url) == 0:    #链接失败
                 print(f" !ERROR: {url} 连接失败, 稍后重试")
             else:
-                # # 3.根据m3u8文件获取ts列表
-                # ci, ts_list = get_ts_list(download_url, m3u8_path)
+                # 3.根据m3u8文件获取ts列表
+                ci, ts_list = get_ts_list(download_url, m3u8_path)
 
-                # # 4.爬取mp4片段 + 合并mp4
-                # get_mp4_file(ci, ts_list, folder_path)
+                # 4.爬取mp4片段 + 合并mp4
+                get_mp4_file(ci, ts_list, folder_path)
 
-                # # 5.刪除过程性文件
-                # delete_file(folder_path)
+                # 5.刪除过程性文件
+                delete_file(folder_path)
 
                 # 6.(可选)修改文件夹名
                 if save_info is True:
