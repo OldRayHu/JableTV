@@ -37,7 +37,7 @@
   ```
   
 
-
+<br/>
 
 #### 2. 下载 Webdriver
 
@@ -45,7 +45,7 @@
 - 将下载好的文件放在 `..\python\Scripts` 文件夹下；
 - 使用 Pycharm 的再复制到 `..\site-packages\selenium\webdriver\chrome` 下；
 
-
+<br/>
 
 #### \*3. 安装 ffmpeg
 
@@ -58,9 +58,16 @@
 #### 1. 启动虚拟环境 (shell)
 - 双击打开 `env.bat` 批处理文件，进入命令行；
 
-
+<br/>
 
 #### 2. 下载影片 (execute)
+
+- **P.S. 要执行的指令可以提前写入 `do.bat` 文件中，运行时在命令行输入 `do.bat` 即可；** 
+
+  ```python
+  # 不修改 do.bat 时，默认根据 download.txt 下载，文件夹名仅为番号
+  # 执行命令：python main.py -f True
+  ```
 
 - 根据 url 单独下载：执行以下指令，并根据提示输入要下载影片的 url 网址；
 
@@ -92,11 +99,15 @@
   python main.py -f True
   ```
 
-**P.S. 要执行的指令可以提前写入 `do.bat` 文件中，运行时在命令行输入 `do.bat` 即可；** 
+- **扩展辅助命令：**
 
-​		**(不修改 `do.bat` 时，默认根据 `download.txt` 下载)**
+  - 最终保存文件夹名为完整番号名，在执行时额外输入 `-i True` 即可，例如：
 
+    ```bash
+    python main.py -i True -f True
+    ```
 
+<br/>
 
 #### 3. 等待下载 (wait)  
 
@@ -105,7 +116,7 @@
 - 下载时会有进度提示；
 - 下载好的影片会保存在 video 文件夹下的对应番号子文件夹中；
 
-
+<br/>
 
 #### 4. 后续处理 (process)
 
