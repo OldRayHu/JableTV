@@ -26,7 +26,7 @@ def get_m3u8_file(folder,url):
         browser.get(url=url)
     except: #获取失败,返回空地址,稍后重试
         browser.quit()
-        return "","",True
+        return "","","",True
     htmlfile_text = browser.page_source
     browser.quit()
 
@@ -37,7 +37,7 @@ def get_m3u8_file(folder,url):
         m3u8_url = result[0]
     except: #result无结果,番号不存在
         shutil.rmtree(folder)
-        return "","",False
+        return "","","",False
     m3u8urlList = m3u8_url.split('/')
     m3u8urlList.pop(-1)
     download_url = '/'.join(m3u8urlList)
@@ -46,12 +46,22 @@ def get_m3u8_file(folder,url):
     m3u8_path = os.path.join(folder, '.m3u8')
     urllib.request.urlretrieve(m3u8_url, m3u8_path)
 
-    # 保存影片封面
     soup = BeautifulSoup(htmlfile_text, "html.parser")
+    
+    # 获取视频全名
+    full_name = os.path.basename(folder)
+    for meta in soup.find_all("meta"):
+        if meta.get("property") == "og:title":
+            full_name = meta.get("content")
+            break
+        else:
+            continue
+
+    # 保存影片封面
     cover_name = f"{os.path.basename(folder)}.jpg"
     cover_path = os.path.join(folder, cover_name)
     if os.path.exists(cover_path):
-        return download_url, m3u8_path, True
+        return download_url, m3u8_path, full_name, True
     for meta in soup.find_all("meta"):
         meta_content = meta.get("content")
         if not meta_content:
@@ -69,4 +79,4 @@ def get_m3u8_file(folder,url):
         except Exception as e:
             print(f" !ERROR: 封面下载失败, 报错为 {e}")
 
-    return download_url, m3u8_path, True
+    return download_url, m3u8_path, full_name, True

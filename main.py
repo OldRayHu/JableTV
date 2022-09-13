@@ -1,14 +1,17 @@
 """
  @ Author:  Ray
- @ Date  :  2022.07.22
+ @ Date  :  2022.09.11
  @ Func  :  工程执行文件
  @ Note  :  无
  @ Args  :  -h --help 获取帮助
             -r --rand 随机影片, True/Flase
             -f --file 根据文件下载, True/Flase
+            -i --info 保存其他信息, True/False
             -u --url  地址列表, 使用','分割
             -n --name 番号列表, 使用','分割, 不区分大小写
 """
+
+import os
 
 from jabletv.url    import  get_url
 from jabletv.folder import  get_folder
@@ -23,7 +26,7 @@ def app():
     failed_list = []    #未完成列表
 
     ## 获取待下载影片的url列表
-    url_list = get_url()
+    url_list, save_info = get_url()
 
     ## 循环下载影片
     while(url_list != []):
@@ -38,7 +41,7 @@ def app():
             print(f"-影片 {name} 开始下载, 剩余 {len(url_list)-1} 个待下载")
 
             # 2.获取并保存m3u8文件 + 保存封面
-            download_url, m3u8_path, exist = get_m3u8_file(folder_path, url)
+            download_url, m3u8_path, full_name, exist = get_m3u8_file(folder_path, url)
             if not exist:                   #番号不存在
                 url_list.pop()
                 print(f" !ERROR: {name} 不存在或网站无资源")
@@ -54,6 +57,14 @@ def app():
 
                 # 5.刪除过程性文件
                 delete_file(folder_path)
+
+                # 6.(可选)修改文件夹名
+                if save_info is True:
+                    old_dir_name = folder_path
+                    os.chdir("video")
+                    new_dir_name = os.path.join(os.getcwd(), full_name)
+                    os.chdir("../")
+                    os.rename(old_dir_name, new_dir_name)
 
                 done_list.append(name)
                 print(f"-影片 {name} 下载完成")

@@ -20,6 +20,8 @@ def init_parser():
         help="Enter True for random download")
     parser.add_argument('-f','--file', type=bool, default=False,
         help="Enter True to download according to file's contant")
+    parser.add_argument('-i','--info', type=bool, default=False,
+        help="Enter True to save other information of the video")
     parser.add_argument('-u','--url', type=str, default="",
         help="Jable TV URLs to download, divided by \',\'")
     parser.add_argument('-n','--name', type=str, default="",
@@ -65,4 +67,4 @@ def get_url():
             line = line.replace("\n","")
             url_list.append(base_url+line.lower()+'/')
     
-    return url_list
+    return url_list, args.info
