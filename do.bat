@@ -1,1 +1,1 @@
-python main.py -f True
+python main.py -f True -i True

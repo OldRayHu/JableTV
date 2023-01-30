@@ -1,6 +1,6 @@
 """
  @ Author:  Ray
- @ Date  :  2022.07.22
+ @ Date  :  2023.01.31
  @ Func  :  获取待下载影片的url列表
  @ Note  :  无
 """
@@ -11,7 +11,7 @@ import argparse
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from jabletv.config import jable_url, base_url
+from jabletv.config import jable_url, base_url, file_path
 
 
 def init_parser():
@@ -62,7 +62,7 @@ def get_url():
         input_str  = random_download()
         url_list.append(input_str)
     elif (args.file is True):
-        file = open('download.txt','r')
+        file = open(file_path,'r')
         for line in file:
             line = line.replace("\n","")
             url_list.append(base_url+line.lower()+'/')

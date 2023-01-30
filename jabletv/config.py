@@ -1,6 +1,6 @@
 """
  @ Author:  Ray
- @ Date  :  2022.07.21
+ @ Date  :  2023.01.31
  @ Func  :  常量参数 
  @ Note  :  无
 """
@@ -12,3 +12,5 @@ headers = {
 jable_url = 'https://jable.tv/'
 
 base_url = 'https://jable.tv/videos/'
+
+file_path = '.\\txt\\download.txt'

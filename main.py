@@ -1,6 +1,6 @@
 """
  @ Author:  Ray
- @ Date  :  2022.09.11
+ @ Date  :  2023.01.31
  @ Func  :  工程执行文件
  @ Note  :  无
  @ Args  :  -h --help 获取帮助
@@ -41,7 +41,7 @@ def app():
             print(f"-影片 {name} 开始下载, 剩余 {len(url_list)-1} 个待下载")
 
             # 2.获取并保存m3u8文件 + 保存封面
-            download_url, m3u8_path, full_name, exist = get_m3u8_file(folder_path, url)
+            download_url, m3u8_path, new_name, exist = get_m3u8_file(folder_path, url)
             if not exist:                   #番号不存在
                 url_list.pop()
                 print(f" !ERROR: {name} 不存在或网站无资源")
@@ -62,7 +62,7 @@ def app():
                 if save_info is True:
                     old_dir_name = folder_path
                     os.chdir("video")
-                    new_dir_name = os.path.join(os.getcwd(), full_name)
+                    new_dir_name = os.path.join(os.getcwd(), new_name)
                     os.chdir("../")
                     os.rename(old_dir_name, new_dir_name)
 

@@ -1,6 +1,6 @@
 """
  @ Author:  Ray
- @ Date  :  2022.07.22
+ @ Date  :  2023.01.31
  @ Func  :  获取并保存m3u8文件, 同时保存封面
  @ Note  :  无
 """
@@ -48,14 +48,43 @@ def get_m3u8_file(folder,url):
 
     soup = BeautifulSoup(htmlfile_text, "html.parser")
     
-    # 获取视频全名
-    full_name = os.path.basename(folder)
-    for meta in soup.find_all("meta"):
-        if meta.get("property") == "og:title":
-            full_name = meta.get("content")
-            break
-        else:
-            continue
+    # 获取视频新名字
+    # (1)获取原名称
+    is_found_1 = False
+    full_name = ''
+    for meta in soup.find_all("meta",{"property":"og:title"}):
+        full_name = meta.get("content")
+        is_found_1 = True
+    if not is_found_1:
+        raise KeyError
+    # (2)寻找影片女优名
+    actress_name_list = []
+    for span in soup.find_all("span",{'class':'placeholder rounded-circle'}):
+        a_name = span.get("data-original-title")
+        actress_name_list.append(a_name)
+    for img in soup.find_all("img",{'class':'avatar rounded-circle'}):
+        a_name = img.get("data-original-title")
+        actress_name_list.append(a_name)
+    # (3)组织新名字
+    full_name_spt = full_name.split(' ')
+    #  (a)part-1 番号
+    part1 = folder.lower()
+    #  (b)part-2,3 演员和影片名字
+    actress_num = len(actress_name_list)
+    if actress_num == 0:    # 没有演员
+        part2 = '[]'
+        part3 = ' '.join(full_name_spt[1:])
+    elif actress_num >= 5:  # 大于等于5个演员
+        part2 = '[G'+str(actress_num)+']'
+        part3 = ' '.join(full_name_spt[1:])
+    elif len(full_name_spt)-2 < actress_num:  # 名字里演员数不足
+        part2 = ''.join(['['+i+']' for i in actress_name_list])
+        part3 = ' '.join(full_name_spt[1:])
+    else:   # 演员数量足够
+        part2 = ''.join(['['+i+']' for i in full_name_spt[-actress_num:]])
+        part3 = ''.join([' '+i for i in full_name_spt[1:-actress_num]])
+    #  (c)拼接完整名字
+    new_name = part1+'-'+part2+'-'+part3[1:]
 
     # 保存影片封面
     cover_name = f"{os.path.basename(folder)}.jpg"
@@ -79,4 +108,4 @@ def get_m3u8_file(folder,url):
         except Exception as e:
             print(f" !ERROR: 封面下载失败, 报错为 {e}")
 
-    return download_url, m3u8_path, full_name, True
+    return download_url, m3u8_path, new_name, True

@@ -65,7 +65,7 @@
 - **P.S. 要执行的指令可以提前写入 `do.bat` 文件中，运行时在命令行输入 `do.bat` 即可；** 
 
   ```python
-  # 不修改 do.bat 时，默认根据 download.txt 下载，文件夹名仅为番号
+  # 不修改 do.bat 时，默认根据 txt 文件夹下的 download.txt 下载，文件夹名仅为番号
   # 执行命令：python main.py -f True
   ```
 
@@ -93,7 +93,7 @@
   python main.py -r True
   ```
 
-- 将番号提前写入 `download.txt` 文件，根据文件下载：执行以下指令
+- 将番号提前写入 txt 文件夹下的 `download.txt` 文件，根据文件下载：执行以下指令
 
   ```bash
   python main.py -f True
@@ -101,7 +101,7 @@
 
 - **扩展辅助命令：**
 
-  - 最终保存文件夹名为完整番号名，在执行时额外输入 `-i True` 即可，例如：
+  - 最终保存文件夹名为番号+演员名+完整名，在执行时额外输入 `-i True` 即可，例如：
 
     ```bash
     python main.py -i True -f True

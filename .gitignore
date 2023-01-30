@@ -1,3 +1,8 @@
-/local.txt
+/txt/local.txt
+/txt/new_names.txt
+/txt/temp_list.txt
+/jabletv/__pycache__/*.*
+/jabletv/crawler/__pycache__/*.*
+/debug.py
 *.mp4
 *.jpg
